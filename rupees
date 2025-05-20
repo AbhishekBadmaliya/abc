@@ -1,0 +1,172 @@
+import React from "react";
+import { Page, Text, View, Document, StyleSheet, Image } from "@react-pdf/renderer";
+
+const styles = StyleSheet.create({
+  header: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  page: {
+    padding: 20,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  paragraph: {
+    color: "black",
+    fontSize: 14,
+    fontWeight: 400,
+  },
+  listContainer: {
+    marginBottom: 20,
+    paddingLeft: 20,
+  },
+  listItem: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 8,
+  },
+  label: {
+    fontSize: 10,
+    fontWeight: "bold",
+    width: "30%",
+  },
+  value: {
+    fontSize: 10,
+    width: "70%",
+  },
+  separator: {
+    borderBottom: "1px solid #3182ce",
+    marginVertical: 10,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#005cab",
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  table: {
+    display: "table",
+    width: "auto",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  row: {
+    fontSize: 10,
+    flexDirection: "row",
+  },
+  cell: {
+    borderStyle: "solid",
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    padding: 2,
+    textAlign: "center",
+    flex: 1,
+  },
+  tableHeader: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 8,
+  },
+});
+const HistoryViewPdf = (viewHistory: any) => {
+  const data = viewHistory?.viewHistory;
+  console.log("data=====", data);
+
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={{ flexDirection: "row", width: "100%" }}>
+          <View style={{ width: "20%", alignItems: "center" }}>
+            <Image
+              src="../assets/logos/gsi.png"
+              style={{
+                width: "160px",
+                height: "100px",
+                borderRadius: "50%",
+                objectFit: "contain",
+                objectPosition: "center",
+              }}
+            />
+          </View>
+          <View style={{ width: "80%", justifyContent: "center" }}>
+            <View style={styles.header}>
+              <Text>GOVERNMENT OF INDIA</Text>
+              <Text>GEOLOGICAL SURVEY OF INDIA</Text>
+              <Text>ENGINEERING DIVISION</Text>
+              <Text style={styles.title}>History Detail Report</Text>
+            </View>
+          </View>
+        </View>
+        <View style={{ marginTop: "10px" }}>
+          <View style={styles.listItem}>
+            <Text style={styles.label}>Vehicle Type:</Text>
+            <Text style={styles.value}>
+              {data.viewHistory?.vehicle_type_name
+                ? data.viewHistory.vehicle_type_name
+                : "N/A"}
+            </Text>
+          </View>
+          <View style={styles.listItem}>
+            <Text style={styles.label}>Make :</Text>
+            <Text style={styles.value}>
+              {data.viewHistory?.vmk_make ? data.viewHistory.vmk_make : "N/A"}
+            </Text>
+          </View>
+
+          <View style={styles.listItem}>
+            <Text style={styles.label}>Registration Number:</Text>
+            <Text style={styles.value}>
+              {data.viewHistory?.registration_no
+                ? data.viewHistory.registration_no
+                : "N/A"}
+            </Text>
+          </View>
+          <View style={styles.listItem}>
+            <Text style={styles.label}>Registration Start Date:</Text>
+            <Text style={styles.value}>
+              {data.viewHistory?.registartion_strt_date &&
+              !isNaN(new Date(data.viewHistory.registartion_strt_date).getTime())
+                ? new Date(data.viewHistory.registartion_strt_date).toLocaleDateString(
+                    "en-GB",
+                    {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    }
+                  )
+                : "N/A"}
+            </Text>
+          </View>
+          <View style={styles.listItem}>
+            <Text style={styles.label}>KMs Covered:</Text>
+            <Text style={styles.value}>
+              {data.viewHistory?.km_before_brkdwn
+                ? data.viewHistory.km_before_brkdwn
+                : "N/A"}
+            </Text>
+          </View>
+          <View style={styles.listItem}>
+            <Text style={styles.label}>Vehicle Price(\u20B9):</Text>
+            <Text style={styles.value}>
+              {data.viewHistory?.vehicle_price ? data.viewHistory.vehicle_price : "N/A"}
+            </Text>
+          </View>
+          <View style={styles.listItem}>
+            <Text style={styles.label}>Total Cost of Repair(₹):</Text>
+            <Text style={styles.value}>
+              {data.viewHistory?.total_cost ? data.viewHistory.total_cost : "N/A"}
+            </Text>
+          </View>
+        </View>
+      </Page>
+    </Document>
+  );
+};
+export default HistoryViewPdf;
